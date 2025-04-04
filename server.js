@@ -3,9 +3,11 @@ require('dotenv').config();
 
 // Импортируем нужные библиотеки
 const express = require('express');
+const cors = require('cors'); // 🆕 добавили cors
 const { Pool } = require('pg');
 
 const app = express();
+app.use(cors()); // 🆕 разрешаем CORS
 app.use(express.json()); // Позволяет серверу работать с JSON
 
 // Подключаемся к PostgreSQL
