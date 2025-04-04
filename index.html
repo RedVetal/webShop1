@@ -10,10 +10,14 @@
       }
       button {
         margin: 5px;
+        padding: 8px 12px;
+        font-size: 16px;
       }
       pre {
         background: #f0f0f0;
         padding: 10px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
       }
     </style>
   </head>
@@ -30,78 +34,41 @@
       const API_BASE = "https://webshop1-0825.onrender.com/api/products";
 
       async function getProducts() {
-        const res = await fetch(API_BASE);
-        const data = await res.json();
-        document.getElementById("output").textContent = JSON.stringify(
-          data,
-          null,
-          2
-        );
+        try {
+          const res = await fetch(API_BASE);
+          const data = await res.json();
+          document.getElementById("output").textContent = JSON.stringify(data, null, 2);
+        } catch (error) {
+          document.getElementById("output").textContent = "❌ Ошибка: " + error.message;
+        }
       }
 
       async function addProduct() {
-        const product = { name: "Tablet", price: 25000 };
-        const res = await fetch(API_BASE, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(product),
-        });
-        const data = await res.json();
-        document.getElementById("output").textContent = JSON.stringify(
-          data,
-          null,
-          2
-        );
+        try {
+          const product = { name: "Tablet", price: 25000 };
+          const res = await fetch(API_BASE, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(product),
+          });
+          const data = await res.json();
+          document.getElementById("output").textContent = JSON.stringify(data, null, 2);
+        } catch (error) {
+          document.getElementById("output").textContent = "❌ Ошибка: " + error.message;
+        }
       }
 
       async function deleteProduct() {
-        const res = await fetch(`${API_BASE}/1`, {
-          method: "DELETE",
-        });
-        const data = await res.json();
-        document.getElementById("output").textContent = JSON.stringify(
-          data,
-          null,
-          2
-        );
-      }
-
-      const API_URL = "https://webshop1-0825.onrender.com/api/products";
-
-      document.getElementById("getBtn").addEventListener("click", async () => {
-        const response = await fetch(API_URL);
-        const products = await response.json();
-        alert(JSON.stringify(products, null, 2)); // Покажем товары
-      });
-
-      document.getElementById("addBtn").addEventListener("click", async () => {
-        const newProduct = {
-          name: "Tablet",
-          price: 25000,
-        };
-
-        const response = await fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(newProduct),
-        });
-
-        const addedProduct = await response.json();
-        alert("Добавлено: " + JSON.stringify(addedProduct));
-      });
-
-      document
-        .getElementById("deleteBtn")
-        .addEventListener("click", async () => {
-          const idToDelete = prompt("Введите ID товара для удаления:");
-
-          const response = await fetch(`${API_URL}/${idToDelete}`, {
+        try {
+          const res = await fetch(`${API_BASE}/1`, {
             method: "DELETE",
           });
-
-          const result = await response.json();
-          alert(result.message);
-        });
+          const data = await res.json();
+          document.getElementById("output").textContent = JSON.stringify(data, null, 2);
+        } catch (error) {
+          document.getElementById("output").textContent = "❌ Ошибка: " + error.message;
+        }
+      }
     </script>
   </body>
 </html>
